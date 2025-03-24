@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import {connectDB} from "./lib/db.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
-dotenv.config();
 
 //console.log("Loaded ENV variables:", process.env);
 
@@ -13,7 +14,14 @@ const app = express();
 
 const PORT = process.env.PORT;
 
+// CORS settings to allow credentials (cookies)
+app.use(cors({
+    origin: "http://localhost:3000", // Change this to your frontend URL
+    credentials: true
+}));
+
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 
